@@ -11,6 +11,7 @@ class Board
   def initialize
     @board = []
     i = 0
+    #je crée mes instance de BordCase
     while (i < 10)
       @board << @board[i] = BoardCase.new(nil, i)
       i +=1
@@ -18,6 +19,7 @@ class Board
   end
 
   def victory?
+    #dans win_comb je rentre toute les possibilité de gagné
     win_comb = [[1,2,3], [4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [1,5,9], [3,5,7]]
     if (win_comb.include?(@player1_plays.sort))
       "Victoire de #{@player1}"
@@ -29,6 +31,7 @@ class Board
   end
 
   def valid_move
+    #ebauche de invalide move
     @player1_plays.sort == @player2_plays.sort
   end
 
@@ -58,8 +61,8 @@ class Board
       puts "Your turn #{@player1}"
       print ">"
       input = gets.chomp.to_i
-      @player1_plays << input
-      @board[input].value = signe_player1
+      @player1_plays << input # je pousse les réponse du joueur dans un array pour le comparer a mon array de la méthode victory?
+      @board[input].value = signe_player1 # je rentre la nouvelle valeur dans mon plate
     else
       puts "Your turn #{@player2}"
       print ">"
