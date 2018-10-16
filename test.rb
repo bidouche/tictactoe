@@ -1,3 +1,5 @@
+#rr = [1,1 ,4,2]
+#puts rr.uniq.sort[1]
 class BoardCase
   attr_accessor :value, :pos
   def initialize(value, pos)
@@ -29,14 +31,13 @@ class Board
   end
 
   def valid_move
-    @player1_plays.sort == @player2_plays.sort
+    @player1_plays.uniq.sort[@input] == @player2_plays.uniq.sort[@input]
   end
 
   def turn
   @player1_plays = []
   @player2_plays = []
   puts "Welcome to TicTacToe"
-  puts  " 1 | 2 | 3 ","----------"," 4 | 5 | 6 ","----------"," 7 | 8 | 9 "
   puts "Player 1 : name"
   print ">"
   @player1 = gets.chomp
@@ -45,27 +46,44 @@ class Board
   puts "Player 2 : name"
   print ">"
   @player2 = gets.chomp
-  #puts "Dans ce jeu vous choisirez vos cases avec des chiffres de 1 à 9, 1 étant la case en haut a gauche et 9 la case en bas a droite"
+  
   if (signe_player1 == "X") then signe_player2 = "O"
   end
   if (signe_player1 == "O") then signe_player2 = "X"
   end
+  
   i = 0
   while (victory? == nil && i < 9)
   plate = "#{board[1].value} | #{board[2].value} | #{board[3].value}","----------","#{board[4].value} | #{board[5].value} | #{board[6].value}","----------","#{board[7].value} | #{board[8].value} | #{board[9].value}" 
   puts plate 
+    
     if (i%2 == 0)
       puts "Your turn #{@player1}"
       print ">"
-      input = gets.chomp.to_i
-      @player1_plays << input
-      @board[input].value = signe_player1
+      @input = gets.chomp.to_i
+      @player1_plays << @input
+
+        if (valid_move == false)# && player1_plays != nil)
+        @board[@input].value = signe_player1
+        else (valid_move == true)
+        puts "déja pris"
+        @input = gets.chomp.to_i
+        @board[@input].value = signe_player1
+        end
+    
     else
       puts "Your turn #{@player2}"
       print ">"
-      input = gets.chomp.to_i
-      @player2_plays << input
-      @board[input].value = signe_player2
+      @input = gets.chomp.to_i
+      @player2_plays << @input
+      
+      if (valid_move == false)# && @player1_plays != nil)
+      @board[@input].value = signe_player2
+      else (valid_move == true)
+      puts "déja pris"
+      @input = gets.chomp.to_i
+      @board[@input].value = signe_player2
+      end
     end
     i += 1
     puts victory?
